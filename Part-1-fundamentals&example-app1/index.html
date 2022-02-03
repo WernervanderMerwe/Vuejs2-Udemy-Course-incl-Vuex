@@ -12,7 +12,7 @@
   </head>
   <body>
     <div id="app">
-      <h1>{{ getFullName(firstName, lastName).name }}</h1>
+      <a v-bind:href="blogUrl">Visit my blog</a>
     </div>
 
     <script src="vue.js"></script>
@@ -20,16 +20,7 @@
       new Vue({
         el: "#app",
         data: {
-          age: 28,
-          firstName: "Werner",
-          lastName: "van der Merwe",
-        },
-        methods: {
-          getFullName: function (first, last) {
-            return {
-              name: first + " " + last,
-            };
-          },
+          blogUrl: "http://codingexplained.com",
         },
       });
     </script>
