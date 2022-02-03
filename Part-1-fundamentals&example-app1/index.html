@@ -12,7 +12,10 @@
   </head>
   <body>
     <div id="app">
-      <a v-bind:href="blogUrl">Visit my blog</a>
+      <p>Title: {{ movieTitle }}</p>
+      <p>Released: {{ releaseYear.toString() }}</p>
+      <p>The movie is {{releaseYear < 2000 ? 'Old' : 'New'}}</p>
+      <div v-bind:title="movieTitle">Hover your mouse here!</div>
     </div>
 
     <script src="vue.js"></script>
@@ -20,7 +23,8 @@
       new Vue({
         el: "#app",
         data: {
-          blogUrl: "http://codingexplained.com",
+          movieTitle: "Just Go With It",
+          releaseYear: 2011,
         },
       });
     </script>
