@@ -12,10 +12,7 @@
   </head>
   <body>
     <div id="app">
-      <p>Title: {{ movieTitle }}</p>
-      <p>Released: {{ releaseYear.toString() }}</p>
-      <p>The movie is {{releaseYear < 2000 ? 'Old' : 'New'}}</p>
-      <div v-bind:title="movieTitle">Hover your mouse here!</div>
+      <div v-bind:title="firstName + ' ' + lastName">Hover to see my name</div>
     </div>
 
     <script src="vue.js"></script>
@@ -23,8 +20,8 @@
       new Vue({
         el: "#app",
         data: {
-          movieTitle: "Just Go With It",
-          releaseYear: 2011,
+          firstName: "Werner",
+          lastName: "van der Merwe",
         },
       });
     </script>
