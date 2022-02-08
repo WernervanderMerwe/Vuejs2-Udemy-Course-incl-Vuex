@@ -12,9 +12,7 @@
   </head>
   <body>
     <div id="app">
-      <button v-on:click.once="showDialog">click here!</button>
-      <!-- prettier-ignore -->
-      <a href="http://google.com" v-on:click.prevent="showDialog" >Or here!</a>
+      <input type="text" v-on:keyup.enter.space="pressedEnterOrSpace" />
     </div>
 
     <script src="vue.js"></script>
@@ -22,8 +20,8 @@
       new Vue({
         el: "#app",
         methods: {
-          showDialog: function () {
-            alert("Hello world");
+          pressedEnterOrSpace: function () {
+            alert("You pressed enter");
           },
         },
       });
