@@ -12,7 +12,8 @@
   </head>
   <body>
     <div id="app">
-      <input type="text" v-on:keyup.enter.space="pressedEnterOrSpace" />
+      <input type="text" v-on:keyup.shift.enter="mylistener" />
+      <button v-on:click.shift="myButtonListener">Click here!</button>
     </div>
 
     <script src="vue.js"></script>
@@ -20,8 +21,11 @@
       new Vue({
         el: "#app",
         methods: {
-          pressedEnterOrSpace: function () {
-            alert("You pressed enter");
+          mylistener: function () {
+            alert("You pressed shift + enter key");
+          },
+          myButtonListener: function () {
+            alert("You clicked the button");
           },
         },
       });
