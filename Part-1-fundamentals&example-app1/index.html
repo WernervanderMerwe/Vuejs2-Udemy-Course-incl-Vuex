@@ -12,16 +12,20 @@
   </head>
   <body>
     <div id="app">
-      <div v-bind:title="firstName + ' ' + lastName">Hover to see my name</div>
+      <button v-on:click="clickedButton('Hello world', $event)">
+        Click here
+      </button>
     </div>
 
     <script src="vue.js"></script>
     <script type="text/javascript">
       new Vue({
         el: "#app",
-        data: {
-          firstName: "Werner",
-          lastName: "van der Merwe",
+        methods: {
+          clickedButton: function (message, event) {
+            console.log(event);
+            alert(message);
+          },
         },
       });
     </script>
