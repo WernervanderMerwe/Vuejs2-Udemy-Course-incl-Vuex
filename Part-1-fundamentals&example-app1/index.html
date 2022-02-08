@@ -12,9 +12,9 @@
   </head>
   <body>
     <div id="app">
-      <div v-on:click="showDialog">
-        <button v-on:click.stop="showDialog">click here!</button>
-      </div>
+      <button v-on:click.once="showDialog">click here!</button>
+      <!-- prettier-ignore -->
+      <a href="http://google.com" v-on:click.prevent="showDialog" >Or here!</a>
     </div>
 
     <script src="vue.js"></script>
