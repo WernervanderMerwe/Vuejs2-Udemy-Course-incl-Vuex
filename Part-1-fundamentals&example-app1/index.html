@@ -12,9 +12,9 @@
   </head>
   <body>
     <div id="app">
-      <button v-on:click="clickedButton('Hello world', $event)">
-        Click here
-      </button>
+      <div v-on:click="showDialog">
+        <button v-on:click.stop="showDialog">click here!</button>
+      </div>
     </div>
 
     <script src="vue.js"></script>
@@ -22,9 +22,8 @@
       new Vue({
         el: "#app",
         methods: {
-          clickedButton: function (message, event) {
-            console.log(event);
-            alert(message);
+          showDialog: function () {
+            alert("Hello world");
           },
         },
       });
