@@ -12,20 +12,39 @@
   </head>
   <body>
     <div id="app">
-      <input type="text" v-on:keyup.shift.enter="mylistener" />
-      <button v-on:click.shift="myButtonListener">Click here!</button>
+      <!-- EXERCISE 1: Make the below text input update a data property on every 
+      "keyup" event. Also output the data property.
+      Hint: event.target.value gives access to input value. -->
+      <input type="text" v-on:keyup="nameKeyup" />
+      Output: {{ name }}
+
+      <br /><br />
+
+      <!-- EXERCISE 2: Make the below text input update the data property from 
+      exercise 1, but only when pressing the Control + Enter keys. 
+      Hint: The key modifier for the Control key is named "ctrl" -->
+      <input type="text" v-on:keyup.ctrl.enter="name = $event.target.value" />
+      Output: {{ name }}
+
+      <br /><br />
+
+      <!-- EXERCISE 3: Prevent the below form from submitting. 
+      Hint: Prevent the "submit" event on the form. -->
+      <form action="" method="GET" v-on:submit.prevent>
+        <input type="submit" value="Submit" />
+      </form>
     </div>
 
     <script src="vue.js"></script>
     <script type="text/javascript">
       new Vue({
         el: "#app",
+        data: {
+          name: "",
+        },
         methods: {
-          mylistener: function () {
-            alert("You pressed shift + enter key");
-          },
-          myButtonListener: function () {
-            alert("You clicked the button");
+          nameKeyup: function (event) {
+            this.name = event.target.value;
           },
         },
       });
