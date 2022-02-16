@@ -12,27 +12,29 @@
   </head>
   <body>
     <div id="app">
-      <!-- EXERCISE 1: Make the below text input update a data property on every 
-      "keyup" event. Also output the data property.
-      Hint: event.target.value gives access to input value. -->
-      <input type="text" v-on:keyup="nameKeyup" />
-      Output: {{ name }}
+      <!-- EXERCISE 1: Use two-way data binding to update the value of a "password" 
+        data property. -->
+      <input type="password" placeholder="Enter your name" v-model="password" />
 
-      <br /><br />
+      <!-- EXERCISE 2: Show the correct paragraph depending on the length of 
+        the entered password. -->
+      <p v-if="password.length > 8">
+        Awesome! Your password is longer than 8 characters.
+      </p>
+      <p v-else-if="password.length > 0">Please enter a longer password.</p>
+      <p v-else>Please enter a password.</p>
 
-      <!-- EXERCISE 2: Make the below text input update the data property from 
-      exercise 1, but only when pressing the Control + Enter keys. 
-      Hint: The key modifier for the Control key is named "ctrl" -->
-      <input type="text" v-on:keyup.ctrl.enter="name = $event.target.value" />
-      Output: {{ name }}
-
-      <br /><br />
-
-      <!-- EXERCISE 3: Prevent the below form from submitting. 
-      Hint: Prevent the "submit" event on the form. -->
-      <form action="" method="GET" v-on:submit.prevent>
-        <input type="submit" value="Submit" />
-      </form>
+      <!-- EXERCISE 3: Display the categories as an ordered list with each 
+        category's sub-categories as a nested unordered list. -->
+      <ol>
+        <li v-for="(category, index) in categories">
+          {{ category.name }}
+          <ul>
+            <!-- <li v-for="subValue in categories">{{ subValue.sub[index] }}</li> -->
+            <li v-for="sub in category.sub">{{ sub }}</li>
+          </ul>
+        </li>
+      </ol>
     </div>
 
     <script src="vue.js"></script>
@@ -40,12 +42,12 @@
       new Vue({
         el: "#app",
         data: {
-          name: "",
-        },
-        methods: {
-          nameKeyup: function (event) {
-            this.name = event.target.value;
-          },
+          password: "",
+          categories: [
+            { name: "JavaScript", sub: ["Vue.js", "React", "Angular2"] },
+            { name: "Databases", sub: ["MySQL", "PostgreSQL", "MariaDB"] },
+            { name: "Operating Systems", sub: ["macOS", "Linux", "Windows"] },
+          ],
         },
       });
     </script>
