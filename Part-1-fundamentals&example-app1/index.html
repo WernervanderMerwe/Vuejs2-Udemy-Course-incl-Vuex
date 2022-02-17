@@ -12,17 +12,17 @@
   </head>
   <body>
     <div id="app">
-      <!-- EXERCISE 1: Add a computed property which returns an array of strings 
-      with the movie name followed by the release year in parenthesis. 
-      Then output these strings as an ordered list. -->
-      <ol>
-        <li v-for="movie in formattedMovies">{{ movie }}</li>
-      </ol>
+      <
+      <!-- EXERCISE 1: Implement a "uwfirst" filter which transforms the first 
+        character of each word to uppercase. Use this filter to transform the 
+        paragraph's title with the v-bind directive.
+        HINT: Use JavaScript's "split" function to split the message into words. -->
+      <p v-bind:title="message">{{ message | uwfirst }}</p>
 
-      <!-- EXERCISE 2: Make the button below add a movie of your choice to the 
-      "movies" data property. Then add a watcher which outputs the movie that 
-      was just added in an alert dialog. -->
-      <button v-on:click="addMovie">Add Movie</button>
+      <!-- EXERCISE 2: Apply the filter from the first exercise to the below 
+        paragraph. Then implement a filter which removes any spaces and chain these 
+        two filters together. -->
+      <p>{{ message | uwfirst | removeSpaces }}</p>
     </div>
 
     <script src="vue.js"></script>
@@ -30,29 +30,17 @@
       new Vue({
         el: "#app",
         data: {
-          movies: [
-            { name: "The Matrix", year: 1999 },
-            { name: "The Matrix Reloaded", year: 2003 },
-            { name: "The Matrix Revolutions", year: 2003 },
-          ],
+          message: "hello world!",
         },
-        methods: {
-          addMovie: function () {
-            this.movies.push({
-              name: "The Fast and the Furious",
-              year: 2001,
-            });
+        filters: {
+          uwfirst: function (value) {
+            return value
+              .split(" ")
+              .map((word) => word[0].toUpperCase().concat(word.slice(1)))
+              .join(" ");
           },
-        },
-        computed: {
-          formattedMovies: function () {
-            return this.movies.map((movie) => `${movie.name} (${movie.year})`);
-          },
-        },
-        watch: {
-          movies: function (movies) {
-            let newMovie = movies[movies.length - 1];
-            alert(`${newMovie.name} from ${newMovie.year} was just added`);
+          removeSpaces: function (value) {
+            return value.split(" ").join("");
           },
         },
       });
