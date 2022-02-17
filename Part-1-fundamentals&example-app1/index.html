@@ -12,29 +12,17 @@
   </head>
   <body>
     <div id="app">
-      <!-- EXERCISE 1: Use two-way data binding to update the value of a "password" 
-        data property. -->
-      <input type="password" placeholder="Enter your name" v-model="password" />
-
-      <!-- EXERCISE 2: Show the correct paragraph depending on the length of 
-        the entered password. -->
-      <p v-if="password.length > 8">
-        Awesome! Your password is longer than 8 characters.
-      </p>
-      <p v-else-if="password.length > 0">Please enter a longer password.</p>
-      <p v-else>Please enter a password.</p>
-
-      <!-- EXERCISE 3: Display the categories as an ordered list with each 
-        category's sub-categories as a nested unordered list. -->
+      <!-- EXERCISE 1: Add a computed property which returns an array of strings 
+      with the movie name followed by the release year in parenthesis. 
+      Then output these strings as an ordered list. -->
       <ol>
-        <li v-for="(category, index) in categories">
-          {{ category.name }}
-          <ul>
-            <!-- <li v-for="subValue in categories">{{ subValue.sub[index] }}</li> -->
-            <li v-for="sub in category.sub">{{ sub }}</li>
-          </ul>
-        </li>
+        <li v-for="movie in formattedMovies">{{ movie }}</li>
       </ol>
+
+      <!-- EXERCISE 2: Make the button below add a movie of your choice to the 
+      "movies" data property. Then add a watcher which outputs the movie that 
+      was just added in an alert dialog. -->
+      <button v-on:click="addMovie">Add Movie</button>
     </div>
 
     <script src="vue.js"></script>
@@ -42,12 +30,30 @@
       new Vue({
         el: "#app",
         data: {
-          password: "",
-          categories: [
-            { name: "JavaScript", sub: ["Vue.js", "React", "Angular2"] },
-            { name: "Databases", sub: ["MySQL", "PostgreSQL", "MariaDB"] },
-            { name: "Operating Systems", sub: ["macOS", "Linux", "Windows"] },
+          movies: [
+            { name: "The Matrix", year: 1999 },
+            { name: "The Matrix Reloaded", year: 2003 },
+            { name: "The Matrix Revolutions", year: 2003 },
           ],
+        },
+        methods: {
+          addMovie: function () {
+            this.movies.push({
+              name: "The Fast and the Furious",
+              year: 2001,
+            });
+          },
+        },
+        computed: {
+          formattedMovies: function () {
+            return this.movies.map((movie) => `${movie.name} (${movie.year})`);
+          },
+        },
+        watch: {
+          movies: function (movies) {
+            let newMovie = movies[movies.length - 1];
+            alert(`${newMovie.name} from ${newMovie.year} was just added`);
+          },
         },
       });
     </script>
