@@ -9,20 +9,54 @@
     , initial-scale=1.0"
     />
     <title>Document</title>
+    <style type="text/css">
+      .shape {
+        width: 150px;
+        height: 150px;
+        background-color: blue;
+      }
+
+      .highlighted {
+        background-color: #deca9b;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
-      <
-      <!-- EXERCISE 1: Implement a "uwfirst" filter which transforms the first 
-        character of each word to uppercase. Use this filter to transform the 
-        paragraph's title with the v-bind directive.
-        HINT: Use JavaScript's "split" function to split the message into words. -->
-      <p v-bind:title="message">{{ message | uwfirst }}</p>
+      <!-- EXERCISE 1: Bind the "shapeStyles" data property to the "style" attribute. 
+      When clicking the below shape, change the shape from round to squared or 
+      vice versa. 
+      HINT: Use Vue.set to manipulate the data property. Use the "border-radius" 
+      CSS property for round corners. -->
+      <div
+        class="shape"
+        v-bind:style="shapeStyles"
+        v-on:click="changeShape"
+      ></div>
 
-      <!-- EXERCISE 2: Apply the filter from the first exercise to the below 
-        paragraph. Then implement a filter which removes any spaces and chain these 
-        two filters together. -->
-      <p>{{ message | uwfirst | removeSpaces }}</p>
+      <!-- EXERCISE 2: Apply the "highlighted" class to every second row in the below 
+      table. HINT: Use the modulus operator together with the v-for loop index. -->
+      <h1>Employees</h1>
+
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(employee, loopIndex) in employees"
+            v-bind:class="{ highlighted: loopIndex % 2 === 0 }"
+          >
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.title }}</td>
+            <td>{{ companyName }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <script src="vue.js"></script>
@@ -30,17 +64,22 @@
       new Vue({
         el: "#app",
         data: {
-          message: "hello world!",
+          shapeStyles: {},
+          employees: [
+            { name: "Abby", title: "Accountant" },
+            { name: "Andy", title: "Marketing Manager" },
+            { name: "Brandon", title: "Vue.js Expert" },
+            { name: "Bob", title: "Key Account Manager" },
+          ],
+          companyName: "VueX Ltd.",
         },
-        filters: {
-          uwfirst: function (value) {
-            return value
-              .split(" ")
-              .map((word) => word[0].toUpperCase().concat(word.slice(1)))
-              .join(" ");
-          },
-          removeSpaces: function (value) {
-            return value.split(" ").join("");
+        methods: {
+          changeShape: function () {
+            if (typeof this.shapeStyles["border-radius"] !== "undefined") {
+              Vue.set(this.shapeStyles, "border-radius", undefined);
+            } else {
+              Vue.set(this.shapeStyles, "border-radius", "50%");
+            }
           },
         },
       });
