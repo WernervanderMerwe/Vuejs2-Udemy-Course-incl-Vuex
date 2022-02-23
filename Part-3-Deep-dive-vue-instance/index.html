@@ -13,33 +13,58 @@
   </head>
   <body>
     <div id="app">
-      <h1>{{ name }}</h1>
-    </div>
+      <p>Counter: {{ counter }}</p>
 
-    <div id="vm2">
-      <button @click="showName">Show Name</button>
+      <button @click="counter++">Increase Counter</button>
+
+      <button @click="person.name.firstName = 'Andy'">Change first name</button>
     </div>
 
     <script src="vue.js"></script>
     <script type="text/javascript">
-      // *Keep Vue instances self Contained*
       const vm = new Vue({
         el: "#app",
         data: {
-          message: "Hello world!",
-          x: 1,
-          y: 2,
-        },
-        methods: {
-          showMessage: () => alert(this.message),
-        },
-        computed: {
-          z: () => this.x + this.y,
+          counter: 1,
+          person: {
+            name: {
+              firstName: "Werner",
+              lastName: "van der Merwe",
+            },
+          },
         },
       });
 
-      console.log(vm);
-      console.log(vm.message);
+      // vm.$watch("counter", function (newValue, oldValue) {
+      //   alert(`Counter changed from ${oldValue} to ${newValue}`);
+      // });
+
+      // vm.$watch("person.name.firstName", function (newValue, oldValue) {
+      //   alert(`First name changed from ${oldValue} to ${newValue}`);
+      // });
+
+      // vm.$watch(
+      //   "person.name",
+      //   function (newValue, oldValue) {
+      //     alert(
+      //       `First name changed from ${oldValue.firstName} to ${newValue.firstName}`
+      //     );
+      //   },
+      //   { deep: true }
+      // );
+
+      const unwatch = vm.$watch(
+        function () {
+          return this.counter;
+        },
+        function (newValue, oldValue) {
+          alert(`Counter changed from ${oldValue} to ${newValue}`);
+        }
+      );
+
+      setTimeout(function () {
+        unwatch();
+      }, 5000);
     </script>
   </body>
 </html>
