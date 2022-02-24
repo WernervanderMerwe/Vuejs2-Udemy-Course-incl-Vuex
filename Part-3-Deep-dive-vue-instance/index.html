@@ -13,40 +13,19 @@
   </head>
   <body>
     <div id="app">
-      <h1 ref="message">{{ message }}</h1>
-      <button ref="myButton" @click="clickedButton">CLick ME!</button>
-
-      <ul>
-        <li v-for="n in 10" ref="numbers">{{ n }}</li>
-      </ul>
+      <h1>{{ message }}</h1>
     </div>
 
     <script src="vue.js"></script>
     <script type="text/javascript">
       const vm = new Vue({
-        el: "#app",
         data: {
           message: "Hello world",
         },
-        methods: {
-          clickedButton: function () {
-            this.$refs.myButton.innerText = this.message;
-            console.log(this.$refs);
-          },
-        },
       });
 
-      setTimeout(function () {
-        vm.$refs.message.innerText = "this is a test";
-      }, 2000);
-      setTimeout(function () {
-        vm.message = "this is another test";
-      }, 4000);
-
-      setTimeout(function () {
-        console.log(vm.message);
-        console.log(vm.$refs.message.innerText);
-      }, 5000);
+      // vm.$mount("#app");
+      vm.$mount(document.getElementById("app"));
     </script>
   </body>
 </html>
