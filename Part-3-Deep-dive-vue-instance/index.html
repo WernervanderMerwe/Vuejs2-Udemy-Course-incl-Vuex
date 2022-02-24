@@ -13,11 +13,12 @@
   </head>
   <body>
     <div id="app">
-      <p>Counter: {{ counter }}</p>
+      <h1 ref="message">{{ message }}</h1>
+      <button ref="myButton" @click="clickedButton">CLick ME!</button>
 
-      <button @click="counter++">Increase Counter</button>
-
-      <button @click="person.name.firstName = 'Andy'">Change first name</button>
+      <ul>
+        <li v-for="n in 10" ref="numbers">{{ n }}</li>
+      </ul>
     </div>
 
     <script src="vue.js"></script>
@@ -25,45 +26,26 @@
       const vm = new Vue({
         el: "#app",
         data: {
-          counter: 1,
-          person: {
-            name: {
-              firstName: "Werner",
-              lastName: "van der Merwe",
-            },
+          message: "Hello world",
+        },
+        methods: {
+          clickedButton: function () {
+            this.$refs.myButton.innerText = this.message;
+            console.log(this.$refs);
           },
         },
       });
 
-      // vm.$watch("counter", function (newValue, oldValue) {
-      //   alert(`Counter changed from ${oldValue} to ${newValue}`);
-      // });
-
-      // vm.$watch("person.name.firstName", function (newValue, oldValue) {
-      //   alert(`First name changed from ${oldValue} to ${newValue}`);
-      // });
-
-      // vm.$watch(
-      //   "person.name",
-      //   function (newValue, oldValue) {
-      //     alert(
-      //       `First name changed from ${oldValue.firstName} to ${newValue.firstName}`
-      //     );
-      //   },
-      //   { deep: true }
-      // );
-
-      const unwatch = vm.$watch(
-        function () {
-          return this.counter;
-        },
-        function (newValue, oldValue) {
-          alert(`Counter changed from ${oldValue} to ${newValue}`);
-        }
-      );
+      setTimeout(function () {
+        vm.$refs.message.innerText = "this is a test";
+      }, 2000);
+      setTimeout(function () {
+        vm.message = "this is another test";
+      }, 4000);
 
       setTimeout(function () {
-        unwatch();
+        console.log(vm.message);
+        console.log(vm.$refs.message.innerText);
       }, 5000);
     </script>
   </body>
