@@ -5,6 +5,11 @@
 
 <script>
 export default {
-  props: ["author"]
+  props: {
+    author: {
+      type: Object,
+      required: true
+    }
+  }
 };
 </script>
