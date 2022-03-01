@@ -11,7 +11,7 @@
 
 <script>
 import Announcement from "./Announcement.vue";
-import ArticleComponent from "./ArticleComponent.vue";
+import ArticleComponent from "./Article.vue";
 
 export default {
   components: { Announcement, ArticleComponent }
