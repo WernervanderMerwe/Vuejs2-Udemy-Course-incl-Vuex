@@ -1,48 +1,49 @@
 <template>
-  <div class="article">
-    <!-- Global Components  -->
-    <h1>{{ headline }}</h1>
-    <p>{{ publishedDate }}</p>
-    <p>Shares: {{ shares }}</p>
-    <p>{{ content }}</p>
-    <!-- Local component -->
-    <author-component :author="author"></author-component>
+    <div class="article">
+        <h1>{{ title }}</h1>
 
-    <br /><br />
-    <social-sharing-component
-      @articleWasShared="shared('hello', $event)"
-    ></social-sharing-component>
-  </div>
+        <p>Published on {{ published | moment }}</p>
+        <p>Shares: {{ shares }}</p>
+        <p class="lead">{{ content }}</p>
+
+        <app-author :author="author"></app-author>
+        <br><br>
+        <app-social-sharing @articleWasShared="shared"></app-social-sharing>
+    </div>
 </template>
 
 <script>
-import Author from "./Author.vue";
-import Social from "./Social.vue";
+	import moment from 'moment';
+    import Author from './Author.vue';
+    import Social from './Social.vue';
 
-export default {
-  data() {
-    return {
-      headline: "This is a headline",
-      publishedDate: Date().toString(),
-      content: "Lorem ipsum",
-      author: {
-        firstName: "Werner",
-        lastName: "van der Merwe"
-      },
-      shares: 0
-    };
-  },
-  methods: {
-    shared: function(message, event) {
-      this.shares++;
-      console.log(message);
-      console.log(event);
+    export default {
+        data() {
+            return {
+                title: '10 Reasons why Vue.js is Awesome',
+                published: new Date(),
+                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan eu erat ut scelerisque.',
+                author: {
+                    firstName: 'Bo',
+                    lastName: 'Andersen'
+                },
+                shares: 0
+            };
+        },
+        filters: {
+           moment: function(value) {
+               return moment(value).format('MMMM Do');
+           }
+		},
+        methods: {
+            shared: function(event) {
+                this.shares++;
+                console.log(event);
+            }
+        },
+        components: {
+            appAuthor: Author,
+            appSocialSharing: Social
+        }
     }
-  },
-  // Local component
-  components: {
-    authorComponent: Author,
-    socialSharingComponent: Social
-  }
-};
 </script>
