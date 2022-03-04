@@ -1,5 +1,14 @@
 <template>
-  <div class="alert alert-info">{{ announcement }}</div>
+  <div class="alert alert-info">
+    <div v-if="announcement">
+      <p>
+        {{ announcement }}
+      </p>
+    </div>
+    <div v-else>
+      <p>No announcements yet.</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -8,13 +17,12 @@ import { eventBus } from "./main.js";
 export default {
   data() {
     return {
-      announcement: "The site will go down for maintenance soon!",
+      announcement: null,
     };
   },
   created() {
-    eventBus.$on("aritcleWasShared", (data) => {
-      alert(this.announcement, data.announcement);
-      //   return (this.announcement = data.announcement);
+    eventBus.$on("articleWasShared", (data) => {
+      this.announcement = `${data.article.title} was shared on ${data.media}!`;
     });
   },
 };

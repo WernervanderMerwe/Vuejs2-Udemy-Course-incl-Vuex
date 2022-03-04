@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1>
-      <strong>{{ message }}</strong>
+      <strong>Share {{ article.title }} with your friends</strong>
     </h1>
-    <button class="btn btn-primary" @click="shareFacebook">
+    <button class="btn btn-primary" @click="share('Facebook')">
       Share on Facebook
     </button>
-    <button class="btn btn-primary" @click="shareTwitter">
+    <button class="btn btn-primary" @click="share('Twitter')">
       Share on Twitter
     </button>
   </div>
@@ -15,28 +15,20 @@
 <script>
 import { eventBus } from "./main.js";
 export default {
-  data() {
-    return {
-      message: "Share 10 Reasons why vue.js is Awesome with your friends",
-    };
+  props: {
+    article: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
-    shareFacebook() {
+    share(media) {
       eventBus.$emit("articleWasShared", {
-        announcement:
-          "Share 10 Reasons why vue.js is Awesome was shared on Facebook",
+        article: this.article,
+        media: media,
       });
       this.$emit("articleWasShared", {
-        media: "Facebook",
-      });
-    },
-    shareTwitter() {
-      eventBus.$emit("articleWasShared", {
-        announcement:
-          "Share 10 Reasons why vue.js is Awesome was shared on Twitter",
-      });
-      this.$emit("articleWasShared", {
-        media: "Twitter",
+        media: media,
       });
     },
   },
