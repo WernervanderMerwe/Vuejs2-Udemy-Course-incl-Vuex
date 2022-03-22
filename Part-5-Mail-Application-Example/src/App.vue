@@ -11,9 +11,8 @@
 import Sidebar from "./Sidebar.vue";
 import Content from "./Content.vue";
 import messages from "./data/messages.js";
-import rendomMessages from "./data/random-messages";
-import { eventBus } from "./main.js";
 import randomMessages from "./data/random-messages";
+import { eventBus } from "./main.js";
 
 export default {
   data() {

@@ -2,7 +2,7 @@
   <div class="inbox-body">
     <div class="mail-option">
       <button class="btn btn-primary" @click="navigateBack">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp Back
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back
       </button>
 
       <button
