@@ -1,5 +1,13 @@
 <template>
-  <div style="margin-top: 200px; margin-left: 200px; flex">
+  <div
+    style="
+      margin-top: 200px;
+      margin-left: 200px;
+      display: flex;
+      flex-direction: column;
+      width: 150px;
+    "
+  >
     <button class="btn btn-primary" @click="show1 = !show1">Toggle</button>
 
     <transition name="fade">
@@ -16,7 +24,7 @@
       enter-active-class="animate__animated animate__pulse slow"
       leave-active-class="animate__animated animate__zoomOut"
     >
-      <p v-if="show2" style="width: 200px">
+      <p v-if="show2" style="width: 400px">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora sed
         sunt minus temporibus mollitia, vitae tenetur amet culpa odit ratione
         voluptatum, et veritatis, excepturi quos? Porro velit neque hic optio!
@@ -26,10 +34,31 @@
     <button class="btn btn-primary" @click="show3 = !show3">Toggle</button>
 
     <transition>
-      <p v-if="show3" style="width: 200px">
+      <p v-if="show3" style="width: 400px">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora sed
         sunt minus temporibus mollitia, vitae tenetur amet culpa odit ratione
         voluptatum, et veritatis, excepturi quos? Porro velit neque hic optio!
+      </p>
+    </transition>
+
+    <button class="btn btn-primary" @click="show4 = !show4">
+      Toggle Replace
+    </button>
+
+    <transition name="fade" mode="out-in" appear>
+      <p v-if="show4" key="lorem-ipsum" style="width: 200px">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p v-else key="nothing-here">Nothing to see here 👀</p>
+    </transition>
+
+    <button class="btn btn-primary" @click="show5 = !show5">
+      Toggle JS Hook
+    </button>
+
+    <transition @before-enter="beforeEnter" @enter="enter">
+      <p v-if="show5">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p>
     </transition>
   </div>
@@ -42,7 +71,27 @@ export default {
       show1: false,
       show2: false,
       show3: false,
+      show4: false,
+      show5: false,
     };
+  },
+  methods: {
+    beforeEnter(el) {
+      el.style.opacity = 0;
+    },
+    enter(el, done) {
+      let opacity = 0;
+
+      const interval = setInterval(() => {
+        opacity += 0.1;
+        el.style.opacity = opacity;
+
+        if (opacity > 0.9) {
+          clearInterval(interval);
+          done();
+        }
+      }, 100);
+    },
   },
 };
 </script>
@@ -82,6 +131,7 @@ export default {
 .slow {
   animation-duration: 2s;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
