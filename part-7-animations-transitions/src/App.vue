@@ -18,6 +18,8 @@
       </p>
     </transition>
 
+    <br /><br />
+
     <button class="btn btn-primary" @click="show2 = !show2">Toggle</button>
 
     <transition
@@ -31,6 +33,8 @@
       </p>
     </transition>
 
+    <br /><br />
+
     <button class="btn btn-primary" @click="show3 = !show3">Toggle</button>
 
     <transition>
@@ -40,6 +44,8 @@
         voluptatum, et veritatis, excepturi quos? Porro velit neque hic optio!
       </p>
     </transition>
+
+    <br /><br />
 
     <button class="btn btn-primary" @click="show4 = !show4">
       Toggle Replace
@@ -52,19 +58,37 @@
       <p v-else key="nothing-here">Nothing to see here 👀</p>
     </transition>
 
+    <br /><br />
+
     <button class="btn btn-primary" @click="show5 = !show5">
       Toggle JS Hook
     </button>
 
-    <transition @before-enter="beforeEnter" @enter="enter">
+    <transition @before-enter="beforeEnter" @enter="enter" :css="false">
       <p v-if="show5">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p>
     </transition>
+
+    <br /><br />
+
+    <button class="btn btn-primary" @click="changeShape">Switch Shape</button>
+
+    <br /><br />
+
+    <transition name="fade" mode="out-in" appear>
+      <component :is="shape"></component>
+    </transition>
+
+    <!-- lecture 139 -->
+    <!-- lecture 140 -->
   </div>
 </template>
 
 <script>
+import Square from "./Square.vue";
+import Circle from "./Circle.vue";
+
 export default {
   data() {
     return {
@@ -73,6 +97,7 @@ export default {
       show3: false,
       show4: false,
       show5: false,
+      shape: "appSquare",
     };
   },
   methods: {
@@ -92,6 +117,17 @@ export default {
         }
       }, 100);
     },
+    changeShape() {
+      if (this.shape === "appSquare") {
+        this.shape = "appCircle";
+      } else {
+        this.shape = "appSquare";
+      }
+    },
+  },
+  components: {
+    appSquare: Square,
+    appCircle: Circle,
   },
 };
 </script>
@@ -139,6 +175,6 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s;
+  transition: opacity 1s ease;
 }
 </style>
