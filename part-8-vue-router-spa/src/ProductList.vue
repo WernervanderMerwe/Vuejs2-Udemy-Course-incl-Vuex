@@ -3,8 +3,9 @@
     <div v-for="product in products" class="item col-xs-4">
       <div class="thumbnail">
         <img
+          @click="clickedImage(product)"
           class="group list-group-image"
-          src="http://placehold.it/400x250/000/fff"
+          src="http://via.placeholder.com/400x250/000/fff"
         />
         <div class="caption">
           <router-link
@@ -14,6 +15,7 @@
           >
             <a>{{ product.name }}</a>
           </router-link>
+
           <p class="group inner list-group-item-text">
             {{ product.description }}
           </p>
@@ -64,6 +66,14 @@ export default {
       eventBus.$emit("addItemToCart", {
         product: product,
         quantity: quantity,
+      });
+    },
+    clickedImage(product) {
+      this.$router.push({
+        name: "viewProduct",
+        params: {
+          productId: product.id,
+        },
       });
     },
   },
