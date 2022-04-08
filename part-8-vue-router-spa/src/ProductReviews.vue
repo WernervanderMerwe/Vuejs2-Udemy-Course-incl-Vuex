@@ -1,3 +1,3 @@
 <template>
-  <p>This product has incredible reviews!</p>
+    <p>This product has incredible reviews!</p>
 </template>
