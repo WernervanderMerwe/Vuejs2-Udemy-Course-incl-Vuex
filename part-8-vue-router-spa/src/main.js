@@ -23,6 +23,21 @@ const router = new VueRouter({
     }
 });
 
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.isAuthRequired)) {
+        if (!authService.isLoggedIn) {
+            alert("You must be logged in!");
+            return next(false);
+        }
+    }
+    
+    next();
+});
+
+router.afterEach((to, from) => {
+    //alert("You just navigated somewhere!");
+});
+
 Vue.filter('currency', function(value) {
     let formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -34,6 +49,7 @@ Vue.filter('currency', function(value) {
 });
 
 export const eventBus = new Vue();
+export const authService = { isLoggedIn: false };
 
 new Vue({
     el: '#app',
