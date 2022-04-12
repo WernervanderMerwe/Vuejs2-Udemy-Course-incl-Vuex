@@ -9,11 +9,7 @@
         />
         <div class="caption">
           <router-link
-            :to="{
-              name: 'viewProduct',
-              params: { productId: product.id },
-              hash: '#related',
-            }"
+            :to="{ name: 'viewProduct', params: { productId: product.id } }"
             tag="h4"
             class="group inner list-group-item-heading"
           >
@@ -66,12 +62,18 @@ export default {
   },
   created() {
     this.$http
-      .get("http://localhost:3000/products")
+      .get("products")
       .then(
-        (response) => response.json(),
-        (response) => alert("error")
+        (response) => {
+          return response.json();
+        },
+        (response) => {
+          alert("error");
+        }
       )
-      .then((products) => (this.products = products));
+      .then((products) => {
+        this.products = products;
+      });
   },
   methods: {
     addProductToCart(product, quantity) {
@@ -85,9 +87,6 @@ export default {
         name: "viewProduct",
         params: {
           productId: product.id,
-        },
-        query: {
-          discount: 10,
         },
       });
     },

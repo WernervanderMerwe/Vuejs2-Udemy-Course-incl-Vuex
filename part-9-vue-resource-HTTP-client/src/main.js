@@ -1,19 +1,19 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from "vue";
-import App from "./App";
-import VueRouter from "vue-router";
-import { routes } from "./routes";
-import "bootstrap/dist/css/bootstrap.css";
-import VueResource from "vue-resource";
+import Vue from 'vue'
+import App from './App'
+import VueRouter from 'vue-router';
+import VueResource from 'vue-resource';
+import { routes } from './routes';
+import 'bootstrap/dist/css/bootstrap.css';
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
-Vue.filter("currency", function (value) {
-  let formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
+Vue.filter('currency', function(value) {
+  let formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
   });
 
   return formatter.format(value);
@@ -22,14 +22,16 @@ Vue.filter("currency", function (value) {
 export const eventBus = new Vue();
 export const authService = { isLoggedIn: false };
 
+Vue.use(VueResource);
 Vue.use(VueRouter);
+
 const router = new VueRouter({
   routes: routes,
-  mode: "history",
+  mode: 'history',
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
       return {
-        selector: to.hash,
+        selector: to.hash
       };
     }
 
@@ -38,11 +40,11 @@ const router = new VueRouter({
     }
 
     return { x: 0, y: 0 };
-  },
+  }
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.isAuthRequired)) {
+  if (to.matched.some(record => record.meta.isAuthRequired)) {
     if (!authService.isLoggedIn) {
       alert("You must be logged in!");
       return next(false);
@@ -52,11 +54,19 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-Vue.use(VueResource);
+Vue.http.options.root = 'http://localhost:3000';
+Vue.http.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', 'VERY_SECURE_TOKEN_HERE');
+    next((response) => {
+        console.log(response);
+    });
+});
 
 /* eslint-disable no-new */
 new Vue({
-  el: "#app",
-  render: (h) => h(App),
-  router: router,
-});
+  el: '#app',
+  render: h => h(App),
+  router: router
+})
