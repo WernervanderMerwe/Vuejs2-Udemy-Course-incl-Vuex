@@ -96,5 +96,16 @@ export default {
 
     next();
   },
+  methods: {
+    checkout() {
+      if (
+        confirm(
+          "Are you sure that you want to purchase these awesome products?"
+        )
+      ) {
+        this.$store.commit("checkout");
+      }
+    },
+  },
 };
 </script>

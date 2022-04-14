@@ -38,6 +38,14 @@ const store = new Vuex.Store({
     taxAmount: (state, getters) => (percentage) =>
       (getters.cartTotal * percentage) / 100,
   },
+  mutations: {
+    checkout(state) {
+      state.cart.items.forEach(
+        (item) => (item.product.inStock += item.quantity)
+      );
+      state.cart.items = [];
+    },
+  },
 });
 
 const router = new VueRouter({
