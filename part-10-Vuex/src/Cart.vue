@@ -69,6 +69,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { mapMutations } from "vuex";
+import { CHECKOUT } from "./mutation-types";
 
 export default {
   computed: {
@@ -77,13 +79,6 @@ export default {
       return this.$store.state.cart;
     },
   },
-  // TODO: Access cart items, cart total, and tax amount
-
-  // TODO: Implement increaseQuantity method
-
-  // TODO: Implement decreaseQuantity method
-
-  // TODO: Implement checkout method
 
   beforeRouteLeave(to, from, next) {
     if (this.cart.items.length > 0) {
@@ -97,15 +92,7 @@ export default {
     next();
   },
   methods: {
-    checkout() {
-      if (
-        confirm(
-          "Are you sure that you want to purchase these awesome products?"
-        )
-      ) {
-        this.$store.commit("checkout");
-      }
-    },
+    ...mapMutations([CHECKOUT]),
   },
 };
 </script>

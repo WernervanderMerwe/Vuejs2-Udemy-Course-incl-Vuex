@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import { ADD_PRODUCT_TO_CART } from "./mutation-types";
+
 export default {
   props: {
     productId: {
@@ -106,19 +108,11 @@ export default {
     next();
   },
   methods: {
-    addProductToCart() {
-      let cartItem = this.getCartItem(this.product);
-
-      if (cartItem !== null) {
-        cartItem.quantity++;
-      } else {
-        this.cart.items.push({
-          product: this.product,
-          quantity: 1,
-        });
-      }
-
-      this.product.inStock--;
+    [ADD_PRODUCT_TO_CART]() {
+      this.$store.dispatch("addProductToCart", {
+        product: this.product,
+        quantity: 1,
+      });
     },
     getProduct(productId) {
       return this.$http
@@ -131,15 +125,6 @@ export default {
           (response) => response.json(),
           (response) => alert("Could not retrieve product!")
         );
-    },
-    getCartItem(product) {
-      for (let i = 0; i < this.cart.items.length; i++) {
-        if (this.cart.items[i].product.id === product.id) {
-          return this.cart.items[i];
-        }
-      }
-
-      return null;
     },
     goBack() {
       this.$router.history.go(-1);

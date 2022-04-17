@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { ADD_PRODUCT_TO_CART } from "./mutation-types";
 export default {
   data() {
     return {
@@ -82,29 +83,13 @@ export default {
       });
   },
   methods: {
-    addProductToCart(product, quantity) {
-      let cartItem = this.getCartItem(product);
-
-      if (cartItem !== null) {
-        cartItem.quantity += quantity;
-      } else {
-        this.cart.items.push({
+    [ADD_PRODUCT_TO_CART](product, quantity) {
+      this.$store
+        .dispatch("addProductToCart", {
           product: product,
           quantity: quantity,
-        });
-      }
-
-      product.inStock -= quantity;
-    },
-
-    getCartItem(product) {
-      for (let i = 0; i < this.cart.items.length; i++) {
-        if (this.cart.items[i].product.id === product.id) {
-          return this.cart.items[i];
-        }
-      }
-
-      return null;
+        })
+        .then(() => alert("The cart was updated"));
     },
   },
 };
