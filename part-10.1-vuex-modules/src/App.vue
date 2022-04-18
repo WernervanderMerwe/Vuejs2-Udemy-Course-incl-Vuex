@@ -27,20 +27,19 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import { mapActions } from 'vuex';
 
     export default {
         computed: {
-            ...mapGetters([
-                'isLoggedIn'
-            ])
+            ...mapGetters({
+                isLoggedIn: 'user/isLoggedIn'
+            })
         },
         methods: {
-            login() {
-                this.$store.state.isLoggedIn = true;
-            },
-            logout() {
-                this.$store.state.isLoggedIn = false;
-            }
+            ...mapActions('user', {
+                login: 'login',
+                logout: 'logout'
+            })
         }
     }
 </script>
